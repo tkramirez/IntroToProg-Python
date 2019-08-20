@@ -1,0 +1,76 @@
+#Title: Assignment06; Functions and Classes
+#Dev: TKRamirez
+#Date: August 18th, 2019
+#ChangeLog: Copied from Assignment 05 and modified on August 18th 2019
+#I may or may not have used of his code, but I did look at RRoot, 11/02/2016, Created starting template and possibly used some ideas from it.
+
+
+objFileName = "Todo.txt"
+strData = ""
+dicRow = {}
+task_list = []
+
+class OrganizeLists(object):
+    """ This class is used to organize my lists and functions """
+    objFile = open(objFileName, "r")
+    for line in objFile:
+        strData = line.split(",") # readline() reads a line of the data into 2 elements
+        dicRow = {"Task":strData[0].strip(), "Priority":strData[1].strip()}
+        task_list.append(dicRow)
+    objFile.close()
+
+    def print_list(self):
+        for row in task_list:
+            print(row["Task"] + "(" + row["Priority"] + ")")
+        print("**************************")
+    def add_task(self, task_name, priority):
+        dicRow1 = {'Task': task_name, 'Priority': priority}
+        #print(dicRow1)
+        task_list.append(dicRow1)
+    def remove_task(self):
+        remove_option = input('Which item would you like to remove: \n')
+        # loop through all the items in task list, and number them in index
+        for idx, task_dict in enumerate(task_list):
+            if remove_option == task_dict['Task']:
+                task_list.pop(idx)
+                print(f"You have sucessfully removed {remove_option}. Your list is now {task_list}\n")
+                break
+        else:
+            print(f'{remove_option} is not on your list. Try again if you would like to remove something')
+    def save_data(self):
+        save_list = []
+        for item in task_list:
+            save_list.append(item['Task'] + ',' + item['Priority'])
+        save_string = '\n'.join(save_list)
+        fob = open("Todo.txt", "w")
+        fob.write(save_string)
+        fob.close()
+        print("Data Saved Successfully!")
+    def menu_loop(self):
+        menu_choice = '0'
+        while menu_choice != '5':
+            print("____________________\n")
+            print("\t\tMenu:\n")
+            print("1. Show current data. ")
+            print("2. Add a new item. ")
+            print("3. Remove an existing item.")
+            print("4. Save Data to a file.")
+            print("5. Exit Program.")
+            print("____________________\n")
+            menu_choice = input("Pick an item from the Menu: \n")
+            if (menu_choice.strip() == '1'):
+                print("******* Todo list: *******")
+                self.print_list()
+            elif menu_choice == '2':
+                new_task = input("Please input a new Task: \n").capitalize()
+                new_priority = input(f"Please input {new_task} priority\n").capitalize()
+                self.add_task(new_task, new_priority)
+            elif(menu_choice == '3'):
+                self.remove_task()
+            elif(menu_choice == '4'):
+                self.save_data()
+            elif (menu_choice == '5'):
+                break #and Exit the program
+
+listOrganizer1 = OrganizeLists()
+listOrganizer1.menu_loop()
