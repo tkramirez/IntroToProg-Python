@@ -1,0 +1,85 @@
+#Pickle It
+# This is used to demonstrate pickling and shelving data
+
+#first you need to import the modules you're going to use
+
+import pickle
+# Create lists that you want to work with. I am hoping to possibly use this for work so I am using mouse info
+
+print("Mouse Lists.")
+genotype = ["Vip", "PV", "C57"]
+stress = ["High", "Medium", "None"]
+sex = ["Male", "Female"]
+age = ["80-100", "100-120", "120-140"]
+print(genotype)
+print(stress)
+print(sex)
+print(age)
+
+
+fob = open("mice.dat", "wb")
+#this stores my 4 lists into my file
+pickle.dump(genotype, fob)
+pickle.dump(stress, fob)
+pickle.dump(sex,fob)
+pickle.dump(age,fob)
+fob.close()
+
+#retrieve and unpickle lists
+print("\n Unpickling lists.\n")
+fob = open("mice.dat", "rb")
+genotype = pickle.load(fob)
+stress = pickle.load(fob)
+sex = pickle.load(fob)
+age = pickle.load(fob)
+#print to prove it works
+print(genotype)
+print(stress)
+print(sex)
+print(age)
+fob.close()
+
+
+#Simple Exception Handling Script:
+#try/except
+#ValueError
+
+try:
+    num1 = float(input("\nPlease enter a number: "))
+    print("\nGood job!")
+except ValueError:
+    print("\nSomething went wrong! You most likely didn't enter a number. ")
+else:
+    print(f"\nYou entered the number: {num1} ")
+try:
+    num2 = float(input("\nPlease enter another number: "))
+    print("\nGood job!")
+except ValueError:
+    print("\nSomething went wrong! You most likely didn't enter a number. ")
+else:
+    print(f"\nYou entered the number: {num2} ")
+# #another example
+#ZeroDivisionError
+input(f"\nPress enter to divide {num1} by {num2}")
+try:
+    dividend = num1/num2
+    print("-"*50)
+except ZeroDivisionError as e:
+    print("\nOops, looks like you tried to divide by 0! You cannot divide by 0. ")
+except Exception as e:
+    print("\nThere was an unexpected error.")
+    print("\nPythons Error Info")
+    print("-"*50)
+    print(e)
+else:
+    print(f"\nNice, your dividend is {dividend}.")
+
+
+
+
+# try:
+    # dividend = num1/num2
+# except ZeroDivisionError as e:
+    # print("You cannot divide by 0"
+# else:
+    # print(f"Nice, your dividend is {dividend}")
